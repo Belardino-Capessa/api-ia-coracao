@@ -1,9 +1,6 @@
 {
   "version": 2,
-  "builds": [
-    { "src": "API/index.js", "use": "@vercel/node" }
-  ],
   "rewrites": [
-    { "source": "/API/chat", "destination": "API/index.js" }
+    { "source": "/(.*)", "destination": "/API/index.js" }
   ]
 }
