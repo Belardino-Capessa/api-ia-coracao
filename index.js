@@ -1,6 +1,8 @@
 const express = require('express');
 const cors = require('cors');
-const fetch = require('node-fetch');
+// Esta linha abaixo resolve o erro 500 de importação
+const fetch = (...args) => import('node-fetch').then(({default: fetch}) => fetch(...args));
+
 const app = express();
 
 app.use(cors());
@@ -20,8 +22,14 @@ app.post('/chat', async (req, res) => {
         });
 
         const data = await response.json();
-        const textoIA = data.candidates[0].content.parts[0].text;
-        res.status(200).json({ resposta: textoIA });
+        
+        // Proteção caso o Gemini mude a resposta
+        if (data.candidates && data.candidates[0].content) {
+            const textoIA = data.candidates[0].content.parts[0].text;
+            res.status(200).json({ resposta: textoIA });
+        } else {
+            res.status(500).json({ error: "Resposta inválida da API" });
+        }
     } catch (error) {
         res.status(500).json({ error: "Erro interno no servidor" });
     }
