@@ -5,7 +5,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-app.post('/chat', async (req, res) => {
+app.post('/API/chat', async (req, res) => {
     const { prompt } = req.body;
     const apiKey = process.env.GEMINI_API_KEY;
 
@@ -14,7 +14,7 @@ app.post('/chat', async (req, res) => {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                contents: [{ parts: [{ text: "Responda de forma curta e acolhedora: " + prompt }] }]
+                contents: [{ parts: [{ text: "Responda de forma curta: " + prompt }] }]
             })
         });
 
@@ -22,9 +22,8 @@ app.post('/chat', async (req, res) => {
         const textoIA = data.candidates[0].content.parts[0].text;
         res.status(200).json({ resposta: textoIA });
     } catch (error) {
-        res.status(500).json({ error: "Erro na conexão com a IA" });
+        res.status(500).json({ error: "Erro na IA" });
     }
 });
 
 module.exports = app;
-
