@@ -1,6 +1,6 @@
 {
   "version": 2,
   "rewrites": [
-    { "source": "/chat", "destination": "/index.js" }
+    { "source": "/API/chat", "destination": "/API/index.js" }
   ]
 }
