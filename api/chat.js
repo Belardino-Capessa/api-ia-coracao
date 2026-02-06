@@ -29,4 +29,4 @@ export default async function handler(req, res) {
   } catch (err) {
     return res.status(500).json({ error: 'Erro interno', mensagem: err.message });
   }
-}
+  }
