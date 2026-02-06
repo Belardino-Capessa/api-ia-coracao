@@ -1,8 +1,9 @@
 import express from 'express';
 import cors from 'cors';
+import fetch from 'node-fetch';
 
 const app = express();
-app.use(cors({ origin: '*' })); // permite qualquer origem
+app.use(cors({ origin: '*' }));
 app.use(express.json());
 
 app.post('/', async (req, res) => {
@@ -32,4 +33,5 @@ app.post('/', async (req, res) => {
   }
 });
 
+// **Export para Vercel Serverless Function**
 export default app;
