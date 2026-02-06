@@ -1,1 +1,6 @@
-
+{
+  "version": 2,
+  "rewrites": [
+    { "source": "/chat", "destination": "/api/index.js" }
+  ]
+}
