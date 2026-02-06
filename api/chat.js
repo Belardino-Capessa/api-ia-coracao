@@ -1,12 +1,10 @@
-import express from 'express';
-import cors from 'cors';
 import fetch from 'node-fetch';
 
-const app = express();
-app.use(cors({ origin: '*' }));
-app.use(express.json());
+export default async function handler(req, res) {
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Método não permitido' });
+  }
 
-app.post('/', async (req, res) => {
   const { prompt } = req.body;
   const apiKey = process.env.GEMINI_API_KEY;
 
@@ -27,11 +25,8 @@ app.post('/', async (req, res) => {
       return res.status(200).json({ resposta: textoIA });
     }
 
-    res.status(500).json({ error: 'IA retornou vazio', detalhes: data });
+    return res.status(500).json({ error: 'IA retornou vazio', detalhes: data });
   } catch (err) {
-    res.status(500).json({ error: 'Erro interno', mensagem: err.message });
+    return res.status(500).json({ error: 'Erro interno', mensagem: err.message });
   }
-});
-
-// **Export para Vercel Serverless Function**
-export default app;
+}
